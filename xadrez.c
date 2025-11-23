@@ -1,76 +1,86 @@
 #include <stdio.h>
 
-// Desafio de Xadrez - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de movimentação das peças de xadrez.
-// O objetivo é utilizar estruturas de repetição e funções para determinar os limites de movimentação dentro do jogo.
 
-int main()
-{
-    // Nível Novato - Movimentação das Peças
-    // Sugestão: Declare variáveis constantes para representar o número de casas que cada peça pode se mover.
-    // Implementação de Movimentação do Bispo
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação do Bispo em diagonal.
-    printf("*MOVIMENTO BISPO*\n\n");
-    for (int i = 1; i <= 4; i++)
-    {
-        printf("bispo cima %d\n", i);
-    }
+void moverRecursivo(int passo, int limite, const char *direcao) {
+    if (passo > limite)
+        return;
 
-    for (int i = 1; i <= 4; i++)
-    {
-        printf("bispo direita %d\n", i);
+    printf("%s, movimento %d\n", direcao, passo);
+    moverRecursivo(passo + 1, limite, direcao);
+}
+
+void movimentoBispo() {
+    const char *direcoes[] = {"Bispo direita", "bispo cima"};
+
+    for (int d = 0; d < 2; d++) {
+        for (int i = 0; i < 1; i++) { 
+            moverRecursivo(1, 4, direcoes[d]);
+        }
     }
+}
+
+
+void moverTorre(int passo, int limite) {
+    if (passo > limite)
+        return;
+
+    printf("Torre direita, movimento: %d\n", passo);
+    moverTorre(passo + 1, limite);
+}
+
+
+void moverRainha(int passo, int limite) {
+    if (passo > limite)
+        return;
+
+    printf("Rainha esquerda, movimento: %d\n", passo);
+    moverRainha(passo + 1, limite);
+}
+
+
+void movimentoCavalo() {
+    for (int cima = 1; cima <= 2; cima++) {
+
+        if (cima == 2) {
+            printf("Cavalo cima, movimento: %d\n", cima);
+
+            for (int direita = 1; direita <= 2; direita++) {
+
+                if (direita == 2)
+                    break;   
+
+                if (direita == 0)
+                    continue; 
+
+                printf("Cavalo direita, movimento: %d\n", direita);
+            }
+        } 
+        else {
+            printf("Cavalo cima, movimento: %d\n", cima);
+        }
+    }
+}
+
+
+int main() {
+
+    printf("MOVIMENTO BISPO \n\n");
+    movimentoBispo();
+
+
     printf("\n\n*************\n\n");
     printf("MOVIMENTO TORRE\n\n");
-    // Implementação de Movimentação da Torre
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Torre para a direita.
-    int T = 1;
-    while (T <= 8){
-        printf("Torre direita %d\n", T);
-        T++;
-    }
-   
+    moverTorre(1, 8);
 
-    // Implementação de Movimentação da Rainha
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Rainha para a esquerda.
+
     printf("\n\n*************\n\n");
-    printf("MOVIMENTO RAIMHA\n\n");
-
-    int R = 1;
-
-    do {
-        printf("Rainha esquerda %d\n", R);
-        R++;
-    }  while (R <= 8);
+    printf("MOVIMENTO RAINHA\n\n");
+    moverRainha(1, 8);
 
 
-    // Nível Aventureiro - Movimentação do Cavalo
-    // Sugestão: Utilize loops aninhados para simular a movimentação do Cavalo em L.
-    // Um loop pode representar a movimentação horizontal e outro vertical.
     printf("\n\n*************\n\n");
     printf("MOVIMENTO CAVALO\n\n");
-
-    int C = 1, i = 1;
-    while (C <= 2)
-    {
-        printf("Cavalo baixo, movimento: %d\n", C);
-        if (C == 2)
-        {
-            for (i = 1; i <= 1; i++)
-            {
-                printf("Cavalo esquerda, movimento: %d\n", i);
-            }
-            
-        }
-        C++;
-    }
-
-    // Nível Mestre - Funções Recursivas e Loops Aninhados
-    // Sugestão: Substitua as movimentações das peças por funções recursivas.
-    // Exemplo: Crie uma função recursiva para o movimento do Bispo.
-
-    // Sugestão: Implemente a movimentação do Cavalo utilizando loops com variáveis múltiplas e condições avançadas.
-    // Inclua o uso de continue e break dentro dos loops.
+    movimentoCavalo();
 
     return 0;
 }
